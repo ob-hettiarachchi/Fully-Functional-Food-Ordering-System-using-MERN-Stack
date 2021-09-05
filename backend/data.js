@@ -140,7 +140,7 @@ const data = {
         },
         {
             
-            name: 'Chopsey Rice 11',
+            name: 'k',
             category: 'Rice',
             image: '/images/f11.jpg',
             price: 120,
@@ -152,7 +152,7 @@ const data = {
         },
         {
             
-            name: 'Chopsey Rice 12',
+            name: 'l',
             category: 'Rice',
             image: '/images/f12.jpg',
             price: 120,
