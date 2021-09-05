@@ -1,8 +1,26 @@
+import bcrypt from 'bcryptjs';
+
 const data = {
+
+    users: [
+        {
+          name: 'Dilan',
+          email: 'admin@example.com',
+          password: bcrypt.hashSync('1234', 8),
+          isAdmin: true,
+        },
+        {
+          name: 'John',
+          email: 'user@example.com',
+          password: bcrypt.hashSync('1234', 8),
+          isAdmin: false,
+        },
+      ],
+
     products:[
         {
-            _id: '1',
-            name: 'Chopsey Rice',
+           
+            name: 'a',
             category: 'Rice',
             image: '/images/f1.jpg',
             price: 120,
@@ -13,8 +31,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '2',
-            name: 'Chopsey Rice 2',
+           
+            name: 'b',
             category: 'Rice',
             image: '/images/f2.jpg',
             price: 120,
@@ -25,8 +43,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '3',
-            name: 'Chopsey Rice',
+           
+            name: 'c',
             category: 'Rice',
             image: '/images/f3.jpg',
             price: 120,
@@ -37,8 +55,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '4',
-            name: 'Chopsey Rice',
+            
+            name: 'd',
             category: 'Rice',
             image: '/images/f4.jpg',
             price: 120,
@@ -49,8 +67,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '5',
-            name: 'Chopsey Rice',
+            
+            name: 'e',
             category: 'Rice',
             image: '/images/f5.jpg',
             price: 120,
@@ -61,8 +79,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '6',
-            name: 'Chopsey Rice 6',
+           
+            name: 'f',
             category: 'Rice',
             image: '/images/f6.jpg',
             price: 120,
@@ -73,8 +91,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '7',
-            name: 'Chopsey Rice 6',
+           
+            name: 'g',
             category: 'Rice',
             image: '/images/f7.jpg',
             price: 120,
@@ -85,8 +103,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '8',
-            name: 'Chopsey Rice 6',
+            
+            name: 'h',
             category: 'Rice',
             image: '/images/f8.jpg',
             price: 120,
@@ -97,8 +115,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '9',
-            name: 'Chopsey Rice 6',
+            
+            name: 'i',
             category: 'Rice',
             image: '/images/f9.jpg',
             price: 120,
@@ -109,8 +127,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '10',
-            name: 'Chopsey Rice 6',
+            
+            name: 'j',
             category: 'Rice',
             image: '/images/f10.jpg',
             price: 120,
@@ -121,8 +139,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '11',
-            name: 'Chopsey Rice 6',
+            
+            name: 'Chopsey Rice 11',
             category: 'Rice',
             image: '/images/f11.jpg',
             price: 120,
@@ -133,8 +151,8 @@ const data = {
             description: 'High quality food'
         },
         {
-            _id: '12',
-            name: 'Chopsey Rice 6',
+            
+            name: 'Chopsey Rice 12',
             category: 'Rice',
             image: '/images/f12.jpg',
             price: 120,
