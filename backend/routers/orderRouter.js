@@ -1,7 +1,9 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAuth } from '../utils.js';
+import {
+  isAuth
+} from '../utils.js';
 
 const orderRouter = express.Router();
 
@@ -10,8 +12,13 @@ orderRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: 'Cart is empty' });
+      res.status(400).send({
+        message: 'Cart is empty'
+      });
     } else {
+
+
+
       const order = new Order({
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
@@ -23,9 +30,43 @@ orderRouter.post(
         user: req.user._id,
       });
       const createdOrder = await order.save();
-      res
-        .status(201)
-        .send({ message: 'New Order Created', order: createdOrder });
+
+      // OB
+      //order table
+      /*var orderobj = {
+        sample1: sample1,
+        sample1: sample1,
+        sample1: sample1
+      };
+      db.collection('orders').insertOne(orderobj, function (err2) {
+        if (err2) {
+          throw err2;
+        } else {
+          // orderlist table
+          var orderobj2 = {
+            sample1: sample1,
+            sample1: sample1,
+            sample1: sample1
+          };
+          db.collection('orderlists').insertOne(orderobj2, function (err2) {
+            if (err2) {
+              throw err2;
+            } else {
+*/
+
+              res
+                .status(201)
+                .send({
+                  message: 'New Order Created',
+                  order: createdOrder
+                });
+
+/*
+            }
+          });
+        }
+      });*/
+
     }
   })
 );
@@ -38,7 +79,9 @@ orderRouter.get(
     if (order) {
       res.send(order);
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({
+        message: 'Order Not Found'
+      });
     }
   })
 );
@@ -58,9 +101,14 @@ orderRouter.put(
         email_address: req.body.email_address,
       };
       const updatedOrder = await order.save();
-      res.send({ message: 'Order Paid', order: updatedOrder });
+      res.send({
+        message: 'Order Paid',
+        order: updatedOrder
+      });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({
+        message: 'Order Not Found'
+      });
     }
   })
 );

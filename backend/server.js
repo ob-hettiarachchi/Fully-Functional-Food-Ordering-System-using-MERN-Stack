@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
-mongoose.connect(process.env.MONGODB_URL || "mongodb+srv://adminBreeze:test1234@breezedb.mvy8p.mongodb.net/foodorderdb?retryWrites=true&w=majority", 
+mongoose.connect(process.env.MONGODB_URL || "mongodb+srv://adminBreeze:test1234@breezedb.mvy8p.mongodb.net/breeseDB?retryWrites=true&w=majority", 
 {
   useNewUrlParser: true,
   useUnifiedTopology: true,
