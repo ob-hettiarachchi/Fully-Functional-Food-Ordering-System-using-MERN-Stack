@@ -1,6 +1,8 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import Order from '../models/orderModel.js';
+import Order from '../models/cusOrderModel.js';
+import Oborders from '../models/orders.js';
+import Oborderlists from '../models/ordersList.js';
 import {
   isAuth
 } from '../utils.js';
@@ -41,28 +43,102 @@ orderRouter.post(
       });
       const createdOrder = await order.save();
 
-      // OB
-      //order table
-      /*var orderobj = {
-        sample1: sample1,
-        sample1: sample1,
-        sample1: sample1
-      };
-      db.collection('orders').insertOne(orderobj, function (err2) {
-        if (err2) {
-          throw err2;
-        } else {
-          // orderlist table
-          var orderobj2 = {
-            sample1: sample1,
-            sample1: sample1,
-            sample1: sample1
-          };
-          db.collection('orderlists').insertOne(orderobj2, function (err2) {
-            if (err2) {
-              throw err2;
-            } else {
-*/
+
+
+
+      
+
+
+      // OB START -------------------------------------------------------------------------------------------------------------
+
+      const ordersCount = await Oborders.find({}).count();
+
+      if (ordersCount == 0) {
+
+        //orders Table
+        var lastId = parseInt(0);
+        var newId = lastId + 1;
+        var addressArray = req.body.shippingAddress;
+
+        var orderobj = new Oborders({
+          orderID: parseInt(newId),
+          customerID: req.user._id,
+          orderTime: new Date(),
+          deliveryDetails: addressArray.fullName + ", " + addressArray.address + ", " + addressArray.city + ", " + addressArray.postalCode + ", " + addressArray.country,
+          itemsPrice: parseInt(req.body.itemsPrice),
+          deliveryPrice: parseInt(req.body.shippingPrice),
+          taxPrice: parseInt(req.body.taxPrice),
+          totalPrice: parseInt(req.body.totalPrice),
+          paymentMethod: req.body.paymentMethod,
+          paymentStatus: false,
+          orderStatus: parseInt(1)
+        });
+        await orderobj.save();
+
+        // orderList Table
+        var itemsArrray = req.body.orderItems;
+        var itemsArrayLength = itemsArrray.length;
+
+        for (var i = 0; i < itemsArrayLength; i++) {
+          var orderobj2 = new Oborderlists({
+            orderListID: newId + "-" + parseInt(i + 1) + "-" + new Date().getTime(),
+            orderID: parseInt(newId),
+            foodName: itemsArrray[i].name,
+            foodID: itemsArrray[i].product,
+            itemPrice: parseInt(itemsArrray[i].price),
+            quantity: parseInt(itemsArrray[i].qty)
+          });
+          await orderobj2.save();
+        }
+
+      } else if (ordersCount >= 1) {
+
+        //orders Table
+        const oborders = await Oborders.find({}).sort({
+          orderID: -1
+        }).limit(1);
+
+        var lastId = parseInt(oborders[0].orderID);
+        var newId = lastId + 1;
+        var addressArray = req.body.shippingAddress;
+
+        var orderobj = new Oborders({
+          orderID: parseInt(newId),
+          customerID: req.user._id,
+          orderTime: new Date(),
+          deliveryDetails: addressArray.fullName + ", " + addressArray.address + ", " + addressArray.city + ", " + addressArray.postalCode + ", " + addressArray.country,
+          itemsPrice: parseInt(req.body.itemsPrice),
+          deliveryPrice: parseInt(req.body.shippingPrice),
+          taxPrice: parseInt(req.body.taxPrice),
+          totalPrice: parseInt(req.body.totalPrice),
+          paymentMethod: req.body.paymentMethod,
+          paymentStatus: false,
+          orderStatus: parseInt(1)
+        });
+        await orderobj.save();
+
+        // orderList Table
+        var itemsArrray = req.body.orderItems;
+        var itemsArrayLength = itemsArrray.length;
+
+        for (var i = 0; i < itemsArrayLength; i++) {
+          var orderobj2 = new Oborderlists({
+            orderListID: newId + "-" + parseInt(i + 1) + "-" + new Date().getTime(),
+            orderID: parseInt(newId),
+            foodName: itemsArrray[i].name,
+            foodID: itemsArrray[i].product,
+            itemPrice: parseInt(itemsArrray[i].price),
+            quantity: parseInt(itemsArrray[i].qty)
+          });
+          await orderobj2.save();
+        }
+
+      }
+      // OB END -------------------------------------------------------------------------------------------------------------
+
+
+
+
 
               res
                 .status(201)
@@ -71,11 +147,7 @@ orderRouter.post(
                   order: createdOrder
                 });
 
-/*
-            }
-          });
-        }
-      });*/
+
 
     }
   })
